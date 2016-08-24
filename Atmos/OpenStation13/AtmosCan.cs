@@ -12,14 +12,35 @@ namespace OpenStation13
 {
     public partial class AtmosCan : Form
     {
+        AtmosContainer canister;
+
+        private void UpdateDisplay()
+        {
+            GasDisplay.Text = canister.ToString();
+        }
+
         public AtmosCan()
         {
             InitializeComponent();
+            canister = new AtmosContainer((double)CanisterVolume.Value);
+            UpdateDisplay();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            //what gas is selected?
+
+            if (Gas.GasList.ContainsKey(GasPicker.Text)) {
+                AtmosGas selectedGas = Gas.GasList[GasPicker.Text];
+
+                //add whatever gas we have selected.
+                canister.AddGas(selectedGas, (double)GasAmount.Value);
+            }
+            else
+            {
+                //whoops.
+            }
+            UpdateDisplay();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -33,6 +54,22 @@ namespace OpenStation13
         }
 
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SetupCan_Click(object sender, EventArgs e)
+        {
+            canister.Volume = (double) CanisterVolume.Value;
+            UpdateDisplay();
+        }
+
+        private void AtmosCan_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GasButtonOxy_CheckedChanged(object sender, EventArgs e)
         {
 
         }
