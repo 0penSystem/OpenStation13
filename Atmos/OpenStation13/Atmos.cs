@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace OpenStation13
 {
@@ -17,6 +18,8 @@ namespace OpenStation13
         private double volume;
         private double pressure;
         private double temperature;
+        private double breakPressure;
+        private bool broken = false;
 
         public double Volume
         {
@@ -32,13 +35,25 @@ namespace OpenStation13
         {
             get { return temperature; }
         }
+        public double BreakPressure
+        {
+            get { return breakPressure; }
+            set { breakPressure = value; }
+        }
+        public bool Broken
+        {
+            get { return broken; }
+        }
 
+        private void CheckIfBroken() {
+            broken = pressure >= breakPressure;
+        }
 
-
-        public AtmosContainer(double InitVolume)
+        public AtmosContainer(double InitVolume, double breakPressure)
         {
             temperature = Gas.StandardTemperature;
             pressure = 0;
+            this.breakPressure = breakPressure;
             volume = InitVolume;
             mix = new GasMixture();
         }
@@ -54,6 +69,7 @@ namespace OpenStation13
             mix.Remove(gas, moles);
             pressure = EvalPressure();
         }
+        
 
         /// <summary>
         /// Heats the gas by the specified amount in K. Doesn't set the temperature!
@@ -73,16 +89,22 @@ namespace OpenStation13
 
         private double EvalPressure()
         {
+            CheckIfBroken();
             return ((mix.TotalMoles * Gas.IdealGasConstant * temperature) / volume);
         }
 
         private double EvalTemperature()
         {
+            CheckIfBroken();
             return ((pressure * volume) / (mix.TotalMoles * Gas.IdealGasConstant));
         }
 
         public override string ToString()
         {
+            if (broken)
+            {
+                return "Broken Canister.";
+            }
             string temp = mix.ToString();
             if(!temp.Equals("No gas found."))
             {
@@ -199,10 +221,11 @@ namespace OpenStation13
         public static AtmosGas Oxygen = new AtmosGas("Oxygen", 31.999, -218.78, -182.96);
         public static AtmosGas Hydrogen = new AtmosGas("Hydrogen", 31.999, -218.78, -182.96); //TODO: fix numbers here
 
-        public static Dictionary<string, AtmosGas> GasList = new Dictionary<string, AtmosGas>() {
+        public static Dictionary<string, AtmosGas> list = new Dictionary<string, AtmosGas>() {
             { "Oxygen", Oxygen },
             { "Hydrogen", Hydrogen }
         };
+        
         
 
         //Constants

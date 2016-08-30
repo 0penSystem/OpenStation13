@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+<Gases>
+
+  <AtmosGas name ="Hydrogen">
+    <MeltingPoint> 13.99</MeltingPoint>
+    <BoilingPoint> 20.271</BoilingPoint>
+    <MolarWeight>1.00794</MolarWeight>
+    <Combustible>
+      <WithGas name ="Oxygen">
+        <Autoignition>773</Autoignition> 
+        <LowerBound> 4</LowerBound>
+        <UpperBound> 75</UpperBound>
+      </WithGas>
+    </Combustible>
+  </AtmosGas>
+
+  <AtmosGas name ="Oxygen">
+    <MeltingPoint> -218.78</MeltingPoint>
+    <BoilingPoint> -182.96</BoilingPoint>
+    <MolarWeight> 31.999</MolarWeight>
+  </AtmosGas>
+
+  <AtmosGas name="Plasma">
+    <MeltingPoint> -218.78</MeltingPoint>
+    <BoilingPoint> -182.96</BoilingPoint>
+    <MolarWeight> 31.999</MolarWeight>
+    <Combustible>
+      <WithGas name ="Oxygen">
+        <Autoignition>1000</Autoignition>
+        <LowerBound> 4</LowerBound>
+        <UpperBound> 75</UpperBound>
+      </WithGas>
+    </Combustible>
+  </AtmosGas>
+
+</Gases>

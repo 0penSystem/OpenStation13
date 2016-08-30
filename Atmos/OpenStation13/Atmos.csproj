@@ -67,6 +67,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ConfigFiles\AtmosGases.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\DataSources\OpenStation13.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\OpenStation13.Properties.Settings.datasource" />
     <None Include="Properties\Settings.settings">
@@ -81,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConfigFiles\AtmosGases.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

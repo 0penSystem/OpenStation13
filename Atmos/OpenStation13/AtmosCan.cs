@@ -22,7 +22,7 @@ namespace OpenStation13
         public AtmosCan()
         {
             InitializeComponent();
-            canister = new AtmosContainer((double)CanisterVolume.Value);
+            canister = new AtmosContainer((double)CanisterVolume.Value, 1000 * (double)CanisterBreak.Value);
             UpdateDisplay();
         }
 
@@ -30,8 +30,8 @@ namespace OpenStation13
         {
             //what gas is selected?
 
-            if (Gas.GasList.ContainsKey(GasPicker.Text)) {
-                AtmosGas selectedGas = Gas.GasList[GasPicker.Text];
+            if (Gas.list.ContainsKey(GasPicker.Text)) {
+                AtmosGas selectedGas = Gas.list[GasPicker.Text];
 
                 //add whatever gas we have selected.
                 canister.AddGas(selectedGas, (double)GasAmount.Value);
@@ -60,7 +60,7 @@ namespace OpenStation13
 
         private void SetupCan_Click(object sender, EventArgs e)
         {
-            canister.Volume = (double) CanisterVolume.Value;
+            canister = new AtmosContainer((double)CanisterVolume.Value, 1000 * (double)CanisterBreak.Value);
             UpdateDisplay();
         }
 
@@ -72,6 +72,12 @@ namespace OpenStation13
         private void GasButtonOxy_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void HeatBtn_Click(object sender, EventArgs e)
+        {
+            canister.HeatGas((double)HeatValue.Value);
+            UpdateDisplay();
         }
     }
 }
